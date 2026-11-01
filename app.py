@@ -134,3 +134,22 @@ else:
             )
             st.plotly_chart(fig, use_container_width=True)
         else:
+            st.info("No inspection data logged yet. Upload an image to start counting.")
+
+    st.divider()
+
+    # Inspection Log Table
+    st.subheader("📋 Inspection Log Table")
+    if total_scanned > 0:
+        df_log = pd.DataFrame(history_list)
+        st.dataframe(df_log, use_container_width=True)
+        
+        csv_data = df_log.to_csv(index=False).encode('utf-8')
+        st.download_button(
+            label="📥 Export Inspection Log (CSV)",
+            data=csv_data,
+            file_name="3D_Print_Quality_Log.csv",
+            mime="text/csv"
+        )
+    else:
+        st.caption("Scan history will populate dynamically in this table.")
